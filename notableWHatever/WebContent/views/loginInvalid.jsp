@@ -27,8 +27,7 @@
               <fieldset>
 
                 <div class="form-group">
-                  <span class="h6-style-guide">Sign in to access your
-                    Notable Wholesale account.</span>
+                  <span class="h6-style-guide" id="invalidLogin">*Please enter a valid email and password to login*</span>
                 </div>
                 <div class="form-group">
                   <label for="logonId">Email Address</label> 
