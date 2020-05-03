@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <header>
         <div id="homeHeader">
             <div class="row" id="topRow">
@@ -15,18 +17,22 @@
                         </button>
                     </form>
                 </div>
+
                 <div class="col-sm-4">
                     <div class="leftHeader">
                         <a class="headerButton btn" href="home?name=cart" role="button"><i
                             class="fa fa-shopping-cart"></i> Cart</a>
+                            
+                    <c:if test="${user.firstName == null }"> 
                             <a class="headerButton btn" href="home?name=login" role="button"><i
 							class="fa fa-address-card"></i> Sign In</a>
-                            
+                    </c:if>
+                    
+                    <c:if test="${user.firstName != null }">
                              <a class="headerButton btn"
                             href="home?name=account" id="navbarDropdownMenuLink" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-user-circle"></i> My Account
-                        </a>
+                            <i class="fa fa-user-circle"></i> My Account</a>
                         <div class="dropdown-menu"
                             aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" href="home?name=account"><i
@@ -36,10 +42,18 @@
                                 class="fa fa-gift"></i> Wishlist</a> <a class="dropdown-item"
                                 href="home?name=home"><i class="fa fa-power-off"></i> Log Out</a>
                         </div>
+                    </c:if>
+                        
                     </div>
                 </div>
             </div>
+            
+           <c:if test="${user.firstName != null }">
+           <p id="welcomeBack">Welcome back, ${user.firstName }!</p>
+           </c:if>
+           
         </div>
+         
         <div class="productMenu">
             <div class="d-flex justify-content-center">
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
