@@ -204,3 +204,12 @@ footer a:hover {
         float: left;
     }
 }
+
+#invalidLogin {
+	color: red;
+}
+
+#welcomeBack {
+	color: white;
+	text-align: center;
+}

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import com.notable.business.User;
 import com.notable.data.UserIO;
 
-@WebServlet("/register")
+//@WebServlet("/register")
 public class UserController extends HttpServlet {
 
 	@Override
