@@ -137,6 +137,7 @@ footer a:hover {
     line-height: 23px;
     text-align: start;
     border-width: 1px;
+    
 }
 #nwCard.card {
     padding: 0px;
@@ -151,6 +152,10 @@ footer a:hover {
     padding-bottom: 30px;
     padding-left: 30px;
     margin-bottom: 0px;
+}
+#nwCartContainer.container{
+	min-width: 50%;
+	max-width: 50%;
 }
 @media ( min-width : 769px) {
     .col-lg-6 {
