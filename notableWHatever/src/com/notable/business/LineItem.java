@@ -5,7 +5,12 @@ import java.io.Serializable;
 
 public class LineItem implements Serializable {
 
-    private int lineItemId;
+    @Override
+	public String toString() {
+		return "LineItem [lineItemId=" + lineItemId + ", product=" + product + ", quantity=" + quantity + "]";
+	}
+
+	private int lineItemId;
     private Product product;
     private int quantity = 1;
 

@@ -20,7 +20,7 @@
 
                 <div class="col-sm-4">
                     <div class="leftHeader">
-                        <a class="headerButton btn" href="home?name=cart" role="button"><i
+                        <a class="headerButton btn" href="cart" role="button"><i
                             class="fa fa-shopping-cart"></i> Cart</a>
                                                 
                     <c:choose>
