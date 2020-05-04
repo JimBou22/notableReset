@@ -32,9 +32,15 @@ public class RegisterController extends HttpServlet {
 			url = registerUser(request, response);
 		} else if (action.equals("login")) {
 			url = loginUser(request, response);
+			// setting an attribute to be used in home controller
+			// the url returned will be "/home" to go to home controller
+			//request.getSession().setAttribute("action", "index");
+		} else if (action.equals("logout")) {
+			url = logoutUser(request, response);
 		}
 
 		getServletContext().getRequestDispatcher(url).forward(request, response);
+		
 	}
 
 	@Override
@@ -87,18 +93,57 @@ public class RegisterController extends HttpServlet {
 		if (isValidUser) {
 			// System.out.println("User is authenticated");
 			User user = UserDB.getUser(email);
+			
 			HttpSession session = request.getSession();
 			session.setAttribute("user", user);
 			
-//			Cookie cookie = new Cookie("userEmailCookie", user.getEmail() );
-//			cookie.setMaxAge(60*60*24*365*2);
-//			cookie.setPath("/");
-//			response.addCookie(cookie);
+			Cookie firstNameCookie = new Cookie("firstNameCookie", user.getFirstName());
+			firstNameCookie.setMaxAge(60*60*24*365*2);
+			firstNameCookie.setPath("/");
+			response.addCookie(firstNameCookie);
+			
+			boolean makeLoginCookie = true;
+			Cookie[] cookies = request.getCookies();
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equalsIgnoreCase("loggedInCookie")) {
+					cookie.setValue("yes");
+					response.addCookie(cookie);
+					makeLoginCookie = false;
+				}
+			}
+			if (makeLoginCookie) {
+				Cookie loggedInCookie = new Cookie("loggedInCookie", "yes");
+				loggedInCookie.setMaxAge(60*60*24*365*2);
+				loggedInCookie.setPath("/");
+				response.addCookie(loggedInCookie);
+			}
+			
+			
+//			Cookie[] cookies = request.getCookies();
+//			for (Cookie cookieee : cookies) {
+//				System.out.println("c name: " + cookieee.getName());
+//				System.out.println("c value: " + cookieee.getValue());
+//			}	
 
 		} else {
 			// System.out.println("Wrong email and/or password!");
 			return "/views/loginInvalid.jsp";
 		}
-		return "/views/home.jsp";
+		// will be going to home controller to get the cookies to load initially
+		return "/index.jsp";
+	}
+	
+	private String logoutUser(HttpServletRequest request, HttpServletResponse response) {
+			
+			Cookie[] cookies = request.getCookies();
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equalsIgnoreCase("loggedInCookie")) {
+					cookie.setValue("no");
+					cookie.setPath("/");
+					response.addCookie(cookie);
+				}
+			}
+			
+		return "/index.jsp";
 	}
 }

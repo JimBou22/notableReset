@@ -24,6 +24,11 @@ public class homeController extends HttpServlet {
 		
 		String url = "/views/" + name + ".jsp";
 		
+		String action = request.getParameter("action");
+		if (action != null && action.equalsIgnoreCase("index")) {
+			url = "/views/home.jsp";
+		}
+		
 		getServletContext().getRequestDispatcher(url).forward(request, response);
 	}
 
