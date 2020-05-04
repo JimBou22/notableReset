@@ -84,7 +84,7 @@
         <table>
            <tr>
             <th>Qty</th>
-            <th>Description</th>
+            <th>Name</th>
             <th>Price</th>
             <th>Amount</th>
             <th>&nbsp;</th>
@@ -92,33 +92,45 @@
           <c:forEach var="item" items="${cart.items}">
             <tr class="cart_row">
               <td>
-                <form action="<c:url value='/order/updateItem'/>" method="post">
-                  <input type="hidden" name="productCode" 
+                <form action="<c:url value='cart'/>" method="post">
+                   <input type="hidden" name="productId"
+                  			value="<c:out value='${item.product.productId}'/>">
+                  <input type="hidden" name="name" 
                          value="<c:out value='${item.product.name}'/>">
+                  <input type="hidden" name="description"
+                  			value="<c:out value='${item.product.description}'/>">
+                  <input type="hidden" name="price"
+                  			value="<c:out value='${item.product.price}'/>">
                   <input type=text name="quantity" 
                          value="<c:out value='${item.quantity}'/>" id="quantity">
-                  <input type="submit" value="Update">
+                  <input type="submit" name = "action" value="Update">
                 </form>                  
               </td>
-              <td>${item.product.description}</td>
+              <td>${item.product.name}</td>
               <td>${item.product.priceCurrencyFormat}</td>
               <td>${item.totalCurrencyFormat}</td>
               <td>
-                <form action="<c:url value='/order/removeItem'/>" method="post">
-                  <input type="hidden" name="productCode" 
+                <form action="<c:url value='cart'/>" method="post">
+                  <input type="hidden" name="productId"
+                  			value="<c:out value='${item.product.productId}'/>">
+                  <input type="hidden" name="name" 
                          value="<c:out value='${item.product.name}'/>">
-                  <input type="submit" value="Remove">
+                  <input type="hidden" name="description"
+                  			value="<c:out value='${item.product.description}'/>">
+                  <input type="hidden" name="price"
+                  			value="<c:out value='${item.product.price}'/>">
+                  <input type="submit" name= "action" value="Remove">
                 </form>                  
               </td>
             </tr>
           </c:forEach>
             <tr>
-              <td colspan="2">
+              <td colspan="1">
                 <p><b>To change the quantity for an item</b>, enter the new quantity 
                       and click on the Update button.</p>
                 <p><b>To remove an item</b>, click on the Remove button.</p>
               </td>
-              <td colspan="3">&nbsp;</td>
+              <td colspan="1">&nbsp;</td>
             </tr>
           </table>
       </c:otherwise>

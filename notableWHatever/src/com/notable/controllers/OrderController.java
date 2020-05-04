@@ -4,9 +4,17 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import com.notable.business.*;
+import com.notable.business.Cart;
+import com.notable.business.LineItem;
+import com.notable.business.Product;
+import com.notable.business.User;
+
+import java.util.*;
 
 @WebServlet("/cart")
 public class OrderController extends HttpServlet {
@@ -16,16 +24,17 @@ public class OrderController extends HttpServlet {
     public void doPost(HttpServletRequest request, 
             HttpServletResponse response)
             throws ServletException, IOException {
-        String requestURI = request.getRequestURI();
+
         String url = "/views/cart.jsp";
         
         String action  = request.getParameter("action");
                
         if (action.equals("Add")) /* requestURI.endsWith("/addItem")*/ {
             url = addItem(request, response);
-        } else if (requestURI.endsWith("/updateItem")) {
+            url = showCart(request,response);
+        } else if (action.equals("Update")) {
             url = updateItem(request, response);
-        } else if (requestURI.endsWith("/removeItem")) {
+        } else if (action.equals("Remove")) {
             url = removeItem(request, response);
 		} /*
 			 * else if (requestURI.endsWith("/checkUser")) { url = checkUser(request,
@@ -61,8 +70,9 @@ public class OrderController extends HttpServlet {
     private String showCart(HttpServletRequest request,
             HttpServletResponse response) {
         HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
         Cart cart = (Cart) session.getAttribute("cart");
-        if (cart == null || cart.getCount() == 0) {
+        if (cart == null || cart.getCount() == 0|| user == null) {
             request.setAttribute("emptyCart", "Your cart is empty");
         } else {
             request.getSession().setAttribute("cart", cart);
@@ -95,7 +105,13 @@ public class OrderController extends HttpServlet {
             lineItem.setProduct(product);
             cart.addItem(lineItem);
         }
+       
         session.setAttribute("cart", cart);
+//        List<LineItem> a = new ArrayList<LineItem>();
+//        a = cart.getItems();
+//        for(LineItem b : a) {
+//        	System.out.println(b);
+//        }
         return "/views/cart.jsp";
     }
     
