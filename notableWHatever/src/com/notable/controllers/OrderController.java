@@ -31,12 +31,15 @@ public class OrderController extends HttpServlet {
                
         if (action.equals("Add")) /* requestURI.endsWith("/addItem")*/ {
             url = addItem(request, response);
-            url = showCart(request,response);
         } else if (action.equals("Update")) {
             url = updateItem(request, response);
         } else if (action.equals("Remove")) {
             url = removeItem(request, response);
-		} /*
+		} else {
+			url= showCart(request,response);
+		} 
+        /*
+		}
 			 * else if (requestURI.endsWith("/checkUser")) { url = checkUser(request,
 			 * response); } else if (requestURI.endsWith("/processUser")) { url =
 			 * processUser(request, response); } else if
@@ -54,14 +57,8 @@ public class OrderController extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String requestURI = request.getRequestURI();
-        String url = "/views/cart.jsp";
-        if (requestURI.endsWith("/showCart")) {
-            showCart(request, response);
-		} /*
-			 * else if (requestURI.endsWith("/checkUser")) { url = checkUser(request,
-			 * response); }
-			 */
+        
+        String url=showCart(request, response);
         getServletContext()
                 .getRequestDispatcher(url)
                 .forward(request, response);

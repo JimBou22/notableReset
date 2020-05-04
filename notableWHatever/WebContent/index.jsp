@@ -11,11 +11,11 @@
 </head>
 
 <body>
-
-	<c:redirect url="/home">
+	
+	<%-- <c:import url="/views/home.jsp"/> --%>
+	 <c:redirect url="/home">
 		<c:param name="action" value="index"/>
 	</c:redirect>
-
 </body>
 
 </html>
