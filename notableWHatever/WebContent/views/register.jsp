@@ -16,37 +16,35 @@
 <div class="container home">
   <div class="row">
     <div class="col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 col-xl-4 col-xl-offset-4">
-      <h1>Registration</h1>
       <div class="container" id="nwContainer">
         <div class="card" id="nwCard">
+              <h1>Registration</h1>
           <div class="container-fluid" id="nwContainer">
             <form class="nwForm" action="register" method="post">
-            
               <input type="hidden" name="action" value="add">
-              
               <label class="">First Name:</label>
-              <input type="text" name="firstName" value=""><br>
+              <input class="regInput" type="text" name="firstName" value=""><br>
               <label class="">Last Name:</label>
-              <input type="text" name="lastName" value=""><br>
+              <input class="regInput" type="text" name="lastName" value=""><br>
               <label class="">Address 1:</label>
-              <input type="text" name="address1" value=""><br>
+              <input class="regInput" type="text" name="address1" value=""><br>
               <label class="">Address 2:</label>
-              <input type="text" name="address2" value=""><br>
+              <input class="regInput" type="text" name="address2" value=""><br>
               <label class="">City:</label>
-              <input type="text" name="city" value=""><br>
+              <input class="regInput" type="text" name="city" value=""><br>
               <label class="">State:</label>
-              <input type="text" name="state" value=""><br>
+              <input class="regInput" type="text" name="state" value=""><br>
               <label class="">Zip:</label>
-              <input type="text" name="zip" value=""><br>
+              <input class="regInput" type="text" name="zip" value=""><br>
               <label class="">Country:</label>
-              <input type="text" name="country" value=""><br>
+              <input class="regInput" type="text" name="country" value=""><br>
               <label class="">Email:</label>
-              <input type="email" name="email" value=""><br>
+              <input class="regInput" type="email" name="email" value=""><br>
               <label class="">Password:</label>
-              <input type="password" name="password" value=""><br>
+              <input class="regInput" type="password" name="password" value=""><br>
               <label>&nbsp;</label>
-              <input id="btnWide" type="submit" value="Submit" class="headerButton btn">
-            </form>
+           		<input id="btnWide" type="submit" value="Submit" class="headerButton btn">
+            </form>          
           </div>
         </div>
       </div>

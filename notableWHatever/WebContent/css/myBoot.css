@@ -46,6 +46,14 @@
 }
 #btnWide {
     width: 100%;
+
+}
+.nwForm {
+
+	text-align: right;
+}
+.regInput {
+	margin-right: 30%
 }
 .headerButton:hover {
     background-color: #005DAA;
