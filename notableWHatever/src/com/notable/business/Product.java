@@ -50,4 +50,9 @@ public class Product implements Serializable {
 		return currency.format(price);
 	}
 
+	@Override
+	public String toString() {
+		return name;
+	}
+
 }

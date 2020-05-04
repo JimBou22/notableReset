@@ -11,47 +11,11 @@
 </head>
 
 <body>
-	<c:import url="/sharedViews/header.jsp" />
-
-	<div class="container home">
-		<div class="row">
-			<div class="col-md-12">
-				<h1>Featured Products</h1>
-			</div>
-		</div>
-	</div>
-	<div class="container home">
-		<div class="row featureProducts">
-			<div class="col-sm-3">
-				<a href="product?name=javelin"><img src="images/javelin.jpg"
-					alt="Roman Javelin"></a>
-				<p>Authentic Roman Javelin</p>
-				<p>$575.99</p>
-			</div>
-			<div class="col-sm-3">
-				<a href="product?name=TV"><img src="images/television.jpg"
-					alt="Television"></a>
-				<p>Samsung 40in Television</p>
-				<p>$299.00</p>
-			</div>
-			<div class="col-sm-3">
-				<a href="product?name=stapler"><img src="images/stapler.jpg"
-					alt="Stapler"></a>
-				<p>Stapler</p>
-				<p>$9.99</p>
-			</div>
-			<div class="col-sm-3">
-				<a href="product?name=romphim"><img src="images/romphim.jpg"
-					alt="Romphim"></a>
-				<p>Stylish Romphim</p>
-				<p>$59.99</p>
-			</div>
-		</div>
-	</div>
-
-	<c:import url="/sharedViews/footer.jsp" />
-	<c:import url="/sharedViews/scripts.jsp" />
-
+	
+	<%-- <c:import url="/views/home.jsp"/> --%>
+	 <c:redirect url="/home">
+		<c:param name="action" value="index"/>
+	</c:redirect>
 </body>
 
 </html>

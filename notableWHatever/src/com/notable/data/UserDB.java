@@ -83,8 +83,8 @@ public class UserDB {
 			while(results.next()) {
 				emailResult = results.getString("email");
 				passwordResult = results.getString("password");
-				System.out.println(emailResult);
-				System.out.println(passwordResult);
+//				System.out.println(emailResult);
+//				System.out.println(passwordResult);
 			}
 			
 			if (emailResult.equals(email) && passwordResult.equals(password)) {
@@ -123,6 +123,7 @@ public class UserDB {
 				String state = results.getString("state");
 				String zip = results.getString("zip");
 				String country = results.getString("country");
+				String password = results.getString("password");
 				
 				user = new User();
 				user.setFirstName(firstName);
@@ -133,6 +134,8 @@ public class UserDB {
 				user.setState(state);
 				user.setZip(zip);
 				user.setCountry(country);
+				user.setEmail(email);
+				user.setPassword(password);
 				
 				return user;
 			}
