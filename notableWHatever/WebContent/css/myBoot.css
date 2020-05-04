@@ -46,6 +46,14 @@
 }
 #btnWide {
     width: 100%;
+
+}
+.nwForm {
+
+	text-align: right;
+}
+.regInput {
+	margin-right: 30%
 }
 .headerButton:hover {
     background-color: #005DAA;
@@ -58,6 +66,7 @@
     height: inherit;
     max-width: 89.375rem;
     margin: auto;
+    align-items: center;
 }
 .container.home p {
     text-align: center;
@@ -137,11 +146,15 @@ footer a:hover {
     line-height: 23px;
     text-align: start;
     border-width: 1px;
+    text-align: center;
+    
 }
 #nwCard.card {
     padding: 0px;
     display: flex;
     margin-bottom: 20px;
+    max-width: 750px;
+    min-width: 580px;
 }
 #nwContainer.container-fluid {
     align-items: center;
@@ -151,6 +164,15 @@ footer a:hover {
     padding-bottom: 30px;
     padding-left: 30px;
     margin-bottom: 0px;
+
+}
+
+.cartQuantity {
+	max-width: 45px;
+}
+.cartTD {
+	padding: 5px 15px 5px 15px;
+	
 }
 @media ( min-width : 769px) {
     .col-lg-6 {
@@ -194,7 +216,7 @@ footer a:hover {
 }
 @media ( min-width : 1025px) {
     .col-xl-offset-4 {
-        margin-left: 33.3333%;
+        margin-left: 25%;
     }
     .col-xl-4 {
         width: 33.3333%;

@@ -12,6 +12,13 @@
 
 <body>
   <c:import url="/sharedViews/header.jsp" />
+  <div class="container home">
+	<div class="row">
+	<div class="col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 col-xl-4 col-xl-offset-4">
+		<div class="container" id="nwContainer">
+			<div class="card" id="nwCard">
+							<h1>Cart</h1>
+				<div class="container-fluid" id="nwContainer">
   <c:if test="${cookie.loggedInCookie.value == 'yes'}">
     <c:choose>
       <c:when test="${emptyCart != null}">
@@ -23,27 +30,27 @@
       <c:otherwise>
         <table>
            <tr>
-            <th>Qty</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Amount</th>
-            <th>&nbsp;</th>
+            <th class="cartTD">Qty</th>
+						<th class="cartTD">Name</th>
+						<th class="cartTD">Price</th>
+						<th class="cartTD">Amount</th>
+						<th>&nbsp;</th>
          </tr>
           <c:forEach var="item" items="${cart.items}">
             <tr class="cart_row">
               <td>
                 <form action="<c:url value='cart'/>" method="post">
-                  <input type=text name="quantity" value="<c:out value='${item.quantity}'/>" id="quantity">                         
-                  <input type="submit" name = "action" value="Update">
+                  <input type="number" name="quantity" class="cartQuantity" min="1" max="100" value="<c:out value='${item.quantity}'/>" id="quantity">                         
+                  <input type="submit" class="headerButton btn" name = "action" value="Update">
                 </form>                  
               </td>
-              <td>${item.product.name}</td>
-              <td>${item.product.priceCurrencyFormat}</td>
-              <td>${item.totalCurrencyFormat}</td>
+              <td class="cartTD">${item.product.name}</td>
+							<td class="cartTD">${item.product.priceCurrencyFormat}</td>
+							<td class="cartTD">${item.totalCurrencyFormat}</td>
               <td>
                 <form action="<c:url value='cart'/>" method="post">
                   <input type="hidden" name="name" value="<c:out value='${item.product.name}'/>">
-                  <input type="submit" name= "action" value="Remove">
+                  <input type="submit" class="headerButton btn" name= "action" value="Remove">
                 </form>                  
               </td>
             </tr>
@@ -51,6 +58,12 @@
           </table>
       </c:otherwise>
   </c:choose>
+    </div>
+			</div>
+		</div>
+	</div>
+	</div>
+</div>
 </c:if>
  <c:if test="${cookie.loggedInCookie.value != 'yes'}">
  	<p>Please log in to view your cart</p>
