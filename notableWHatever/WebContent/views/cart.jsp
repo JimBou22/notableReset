@@ -12,14 +12,15 @@
 
 <body>
   <c:import url="/sharedViews/header.jsp" />
-  <div class="container home">
+
+  <c:if test="${cookie.loggedInCookie.value == 'yes'}">
+      <div class="container home">
 	<div class="row">
 	<div class="col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 col-xl-4 col-xl-offset-4">
 		<div class="container" id="nwContainer">
 			<div class="card" id="nwCard">
 							<h1>Cart</h1>
 				<div class="container-fluid" id="nwContainer">
-  <c:if test="${cookie.loggedInCookie.value == 'yes'}">
     <c:choose>
       <c:when test="${emptyCart != null}">
           <p>Your cart is empty.</p>
