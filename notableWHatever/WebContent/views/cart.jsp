@@ -12,8 +12,12 @@
 
 <body>
   <c:import url="/sharedViews/header.jsp" />
+  <c:if test="${cookie.loggedInCookie.value == 'yes'}">
     <c:choose>
       <c:when test="${emptyCart != null}">
+          <p>Your cart is empty.</p>
+      </c:when>
+      <c:when test="${cart == null}">
           <p>Your cart is empty.</p>
       </c:when>
       <c:otherwise>
@@ -29,16 +33,7 @@
             <tr class="cart_row">
               <td>
                 <form action="<c:url value='cart'/>" method="post">
-                   <input type="hidden" name="productId"
-                  			value="<c:out value='${item.product.productId}'/>">
-                  <input type="hidden" name="name" 
-                         value="<c:out value='${item.product.name}'/>">
-                  <input type="hidden" name="description"
-                  			value="<c:out value='${item.product.description}'/>">
-                  <input type="hidden" name="price"
-                  			value="<c:out value='${item.product.price}'/>">
-                  <input type=text name="quantity" 
-                         value="<c:out value='${item.quantity}'/>" id="quantity">
+                  <input type=text name="quantity" value="<c:out value='${item.quantity}'/>" id="quantity">                         
                   <input type="submit" name = "action" value="Update">
                 </form>                  
               </td>
@@ -47,32 +42,20 @@
               <td>${item.totalCurrencyFormat}</td>
               <td>
                 <form action="<c:url value='cart'/>" method="post">
-                  <input type="hidden" name="productId"
-                  			value="<c:out value='${item.product.productId}'/>">
-                  <input type="hidden" name="name" 
-                         value="<c:out value='${item.product.name}'/>">
-                  <input type="hidden" name="description"
-                  			value="<c:out value='${item.product.description}'/>">
-                  <input type="hidden" name="price"
-                  			value="<c:out value='${item.product.price}'/>">
+                  <input type="hidden" name="name" value="<c:out value='${item.product.name}'/>">
                   <input type="submit" name= "action" value="Remove">
                 </form>                  
               </td>
             </tr>
           </c:forEach>
-            <tr>
-              <td colspan="1">
-                <p><b>To change the quantity for an item</b>, enter the new quantity 
-                      and click on the Update button.</p>
-                <p><b>To remove an item</b>, click on the Remove button.</p>
-              </td>
-              <td colspan="1">&nbsp;</td>
-            </tr>
           </table>
       </c:otherwise>
   </c:choose>
-
-     <c:import url="/sharedViews/footer.jsp" />
+</c:if>
+ <c:if test="${cookie.loggedInCookie.value != 'yes'}">
+ 	<p>Please log in to view your cart</p>
+ </c:if>
+    <c:import url="/sharedViews/footer.jsp" />
 	<c:import url="/sharedViews/scripts.jsp" />
 
 </body>

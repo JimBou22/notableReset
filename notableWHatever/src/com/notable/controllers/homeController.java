@@ -24,9 +24,12 @@ public class homeController extends HttpServlet {
 		
 		String url = "/views/" + name + ".jsp";
 		
+		// for redirecting pages for cookies to be applied
 		String action = request.getParameter("action");
 		if (action != null && action.equalsIgnoreCase("index")) {
 			url = "/views/home.jsp";
+		} else if (action != null && action.equalsIgnoreCase("cart")) {
+			url = "/views/cart.jsp";
 		}
 		
 		getServletContext().getRequestDispatcher(url).forward(request, response);
