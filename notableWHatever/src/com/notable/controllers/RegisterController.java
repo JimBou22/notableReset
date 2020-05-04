@@ -107,6 +107,7 @@ public class RegisterController extends HttpServlet {
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().equalsIgnoreCase("loggedInCookie")) {
 					cookie.setValue("yes");
+					cookie.setPath("/");
 					response.addCookie(cookie);
 					makeLoginCookie = false;
 				}
@@ -142,7 +143,16 @@ public class RegisterController extends HttpServlet {
 					cookie.setPath("/");
 					response.addCookie(cookie);
 				}
+				if (cookie.getName().equalsIgnoreCase("firstNameCookie")) {
+					cookie.setMaxAge(0);
+					cookie.setPath("/");
+					response.addCookie(cookie);
+				}
+				
 			}
+			
+			HttpSession session = request.getSession();
+			session.removeAttribute("user");
 			
 		return "/index.jsp";
 	}
