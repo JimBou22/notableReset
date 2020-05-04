@@ -22,34 +22,30 @@
                     <div class="leftHeader">
                         <a class="headerButton btn" href="home?name=cart" role="button"><i
                             class="fa fa-shopping-cart"></i> Cart</a>
-                            
-                    <c:if test="${user.firstName == null }"> 
-                            <a class="headerButton btn" href="home?name=login" role="button"><i
+                                                
+                    <c:choose>
+                    	<c:when test="${cookie.loggedInCookie.value != 'yes' }">
+           					<a class="headerButton btn" href="home?name=login" role="button"><i
 							class="fa fa-address-card"></i> Sign In</a>
-                    </c:if>
-                    
-                    <c:if test="${user.firstName != null }">
-                             <a class="headerButton btn"
-                            href="home?name=account" id="navbarDropdownMenuLink" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+           				</c:when>
+           				<c:when test="${cookie.loggedInCookie.value == 'yes' }">
+           					<a class="headerButton btn" href="home?name=account" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-user-circle"></i> My Account</a>
-                        <div class="dropdown-menu"
-                            aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="home?name=account"><i
-                                class="fa fa-user"></i> User Profile</a> <a class="dropdown-item"
-                                href="home?name=orders"><i class="fa fa-list-ul"></i> Order
-                                History</a> <a class="dropdown-item" href="home?name=wishlist.jsp"><i
-                                class="fa fa-gift"></i> Wishlist</a> <a class="dropdown-item"
-                                href="home?name=home"><i class="fa fa-power-off"></i> Log Out</a>
-                        </div>
-                    </c:if>
-                        
+	                        <div class="dropdown-menu"
+	                            aria-labelledby="navbarDropdownMenuLink">
+	                            <a class="dropdown-item" href="home?name=account"><i class="fa fa-user"></i> User Profile</a> <a class="dropdown-item" href="home?name=orders"><i class="fa fa-list-ul"></i> Order History</a> 
+	                            <a class="dropdown-item" href="home?name=wishlist.jsp"><i class="fa fa-gift"></i> Wishlist</a> 
+	                            <a class="dropdown-item" href="register?action=logout"><i class="fa fa-power-off"></i> Log Out</a>
+	                        </div>
+           				</c:when>
+           			</c:choose>
+
                     </div>
                 </div>
             </div>
-            
-           <c:if test="${user.firstName != null }">
-           <p id="welcomeBack">Welcome back, ${user.firstName }!</p>
+
+           	<c:if test="${cookie.loggedInCookie.value == 'yes'}">
+           		<p id="welcomeBack">Welcome back, ${cookie.firstNameCookie.value}!</p>
            </c:if>
            
         </div>
