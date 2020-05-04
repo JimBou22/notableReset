@@ -30,7 +30,7 @@
 						<c:otherwise>
 							<table>
 								<tr>
-									<th class="cartTD">Qty</th>
+									<th class="cartTD">Quantity</th>
 									<th class="cartTD">Name</th>
 									<th class="cartTD">Price</th>
 									<th class="cartTD">Amount</th>
