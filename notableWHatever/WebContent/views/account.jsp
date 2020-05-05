@@ -27,7 +27,7 @@
         <div class="wrapper row">
           <div class="col-sm-6">
             <div class="preview-pic tab-content product">
-              <div class="tab-pane active" id="pic-1"><img src="../images/rusty.jpg" /></div>
+              <div class="tab-pane active" id="pic-1"><img src="images/rusty.jpg" /></div>
             </div>
           </div>
           <div class="details col-sm-6 product-details">

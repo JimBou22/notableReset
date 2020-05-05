@@ -38,10 +38,12 @@
             <h4 class="price">Price: <span>$18.99</span></h4>
             <p class="vote"><strong>98%</strong> of buyers enjoyed this product! <strong>(84 votes)</strong></p>
             <p> Status: <span>Available</span></p>
-            <form class="add-to-cart" action="cart.jsp" method="POST">
+            <form class="add-to-cart" action="cart" method="POST">
               <label for="qty-1">Quantity</label>
               <input type="text" name="qty-1" id="qty-1" class="qty" value="1" />
-              <button id="cart" value="Add to cart" class="headerButton btn">Add to cart</button>
+              <input type="hidden" name ="productId" value = "1">
+              <input type="hidden" name="name" value="HDMICables"><input type="hidden" name="price" value = "18.99">
+              <button name="action" id="cart" value="Add" class="headerButton btn">Add to cart</button>
             </form>
           </div>
         </div>

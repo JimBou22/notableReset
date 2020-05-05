@@ -46,7 +46,7 @@
               <input type="hidden" name="description" value="Our 3D printer will meet all of your needs. Includes 12 templates for common printing jobs.
                100 year warranty. Buy now and includes a free box of our free-range tofu.">
                <input type="hidden" name="price" value = "2399.99">
-              <button name = "action" id = "cart" value="Add" class="headerButton btn">Add to cart</button>
+              <button name="action" id="cart" value="Add" class="headerButton btn">Add to cart</button>
             </form>
           </div>
         </div>

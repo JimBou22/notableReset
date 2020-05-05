@@ -14,6 +14,7 @@ import com.notable.business.Cart;
 import com.notable.business.LineItem;
 import com.notable.business.Product;
 import com.notable.business.User;
+import com.notable.util.CookieUtil;
 
 import java.util.*;
 
@@ -39,17 +40,7 @@ public class OrderController extends HttpServlet {
 		} else {
 			url= showCart(request,response);
 		} 
-        /*
-		}
-			 * else if (requestURI.endsWith("/checkUser")) { url = checkUser(request,
-			 * response); } else if (requestURI.endsWith("/processUser")) { url =
-			 * processUser(request, response); } else if
-			 * (requestURI.endsWith("/displayInvoice")) { url = displayInvoice(request,
-			 * response); } else if (requestURI.endsWith("/displayUser")) { url =
-			 * "/cart/user.jsp"; } else if (requestURI.endsWith("/displayCreditCard")) { url
-			 * = "/cart/credit_card.jsp"; } else if (requestURI.endsWith("/completeOrder"))
-			 * { url = completeOrder(request, response); }
-			 */
+
         getServletContext()
                 .getRequestDispatcher(url)
                 .forward(request, response);
@@ -84,123 +75,109 @@ public class OrderController extends HttpServlet {
         Cart cart = (Cart) session.getAttribute("cart");
         if (cart == null)
             cart = new Cart();
-//        String productCode = request.getParameter("productCode");
-        
-//        Product product = ProductDB.selectProduct(productCode);
-        //Create product here with values from parameter.
-        Product product = new Product();
-       // int productId = Integer.parseInt(request.getParameter("productId"));
     	String name = request.getParameter("name");
+    	String quant = request.getParameter("qty-1");
     	
     	double price = Double.parseDouble(request.getParameter("price"));
-    	//product.setProductId(productId);
-    	product.setName(name);
-    	
-    	product.setPrice(price);    	
-        if (product != null) {
-            LineItem lineItem = new LineItem();
-            lineItem.setLineItemId(cart.getCount() + 1);
-            lineItem.setProduct(product);
-            cart.addItem(lineItem);
-        }
-        
-        
-        
-        //Add the item to the cookie
-        Cookie[] cookies = request.getCookies();
-		for (Cookie cookie : cookies) {
-			if (cookie.getName().equalsIgnoreCase("firstNameCookie")) { //find name
-				StringTokenizer values = new StringTokenizer(cookie.getValue(),"|"); //find cart cookie
-				values.nextToken();
-				if(values.hasMoreTokens()) {
-					String cartToken = values.nextToken();
-					for(Cookie temp  : cookies) {
-						if(temp.getName().equalsIgnoreCase(cartToken)) { //get cart cookie
-							temp.setValue(temp.getValue() + "|" +name+","+price); //add to cart cookie
-						}
-					}
-				} else { //cart cookie not yet made
-					String cartToken = cookie.getValue() + "|"+cookie.getValue()+"cart"; //give cartcookie name
-					cookie.setValue(cartToken); //set the value of the cookie to this new name
-					StringTokenizer temps = new StringTokenizer(cookie.getValue(),"|"); //get the values of the new cookie
-					temps.nextToken(); //skip first value
-					String cartCookie = temps.nextToken();
-					Cookie newCart = new Cookie(cartCookie,""); //make a new cart cookie
-					response.addCookie(newCart);
-					Cookie[] cookiesNew = request.getCookies(); //add stuff to new cart cookie
-					for(Cookie temp  : cookiesNew) {
-						System.out.println(temp.getName());
-						if(temp.getName().equalsIgnoreCase(cartCookie)) {
-							temp.setValue(temp.getValue() + "|" +name+"," +price);
-						}
-						System.out.println(temp.getName() +":" + temp.getValue());
-					}
-				}
-			}
-		}
-        
-        session.setAttribute("cart", cart);
-//        List<LineItem> a = new ArrayList<LineItem>();
-//        a = cart.getItems();
-//        for(LineItem b : a) {
-//        	System.out.println(b);
-//        }
+     
+        Cookie PrinterCookie = new Cookie(name+"Product", quant + "_" + name + "_" + String.valueOf(price));
+		PrinterCookie.setMaxAge(60*60*24*365*2);
+		PrinterCookie.setPath("/");
+		response.addCookie(PrinterCookie);
+		
+		String cookieValue = PrinterCookie.getValue();
+		String cookieName = PrinterCookie.getName();
+
+		System.out.println("cookieName: " + cookieName);
+		System.out.println("cookieValue: " + cookieValue);
+
+		String[] arr = cookieValue.split("_");
+		ArrayList<String> list = new ArrayList<String>(Arrays.asList(arr));
+		
+		Product myProduct = new Product();
+		LineItem li = new LineItem();
+		int qty = Integer.parseInt(list.get(0));
+		li.setQuantity(qty);
+		li.setProduct(myProduct);
+		myProduct.setName(list.get(1));
+		Double myPrice = Double.parseDouble(list.get(2));
+		myProduct.setPrice(myPrice);
+		
+		cart.addItem(li);
+		session.setAttribute("cart", cart);
+	
         return "/views/cart.jsp";
     }
     
     private String updateItem(HttpServletRequest request,
             HttpServletResponse response) {
-        String quantityString = request.getParameter("quantity");
-//        String productName = request.getParameter("name");
+        String quantity = request.getParameter("quantity");
         HttpSession session = request.getSession();
-        Cart cart = (Cart) session.getAttribute("cart");
-        int quantity;
-        try {
-            quantity = Integer.parseInt(quantityString);
-            if (quantity < 0)
-                quantity = 1;
-        } catch (NumberFormatException ex) {
-            quantity = 1;
+    	Cart cart = (Cart) session.getAttribute("cart");
+
+        Cookie[] cookies = request.getCookies();
+        for(Cookie c:cookies) {
+        	if(c.getName().endsWith("Product")) {
+        	String cookieValue = CookieUtil.getCookieValue(cookies, c.getName() ); //1_3D-Printer_2399.99
+        	String[] arr = cookieValue.split("_");
+        	ArrayList<String> list = new ArrayList<String>(Arrays.asList(arr));
+        	
+        	Product myProduct = new Product();
+        	LineItem li = new LineItem();
+        	
+        	int qty = Integer.parseInt(quantity);
+        	li.setQuantity(qty);
+        	
+        	
+        	li.setProduct(myProduct);
+        	myProduct.setName(list.get(1));
+        	Double myPrice = Double.parseDouble(list.get(2));
+        	myProduct.setPrice(myPrice);
+        	
+        	
+        	cart.addItem(li);
+        	c.setValue(qty + "_" + list.get(1) + "_" + myPrice);
+        	}
         }
-        
-//        Product product = ProductDB.selectProduct(productCode);
-        Product product = new Product();
-//        int productId = Integer.parseInt(request.getParameter("productId"));
-    	String name = request.getParameter("name");
-    	double price = Double.parseDouble(request.getParameter("price"));
-//    	product.setProductId(productId);
-    	product.setName(name);
-    	
-    	product.setPrice(price);  
-        
-        if (product != null && cart != null) {
-            LineItem lineItem = new LineItem();
-            lineItem.setProduct(product);
-            lineItem.setQuantity(quantity);
-            if (quantity > 0)
-                cart.addItem(lineItem);
-            else
-                cart.removeItem(lineItem);
-        }
+		session.setAttribute("cart", cart);
+		
+
         return "/views/cart.jsp";
     }
     
+
     private String removeItem(HttpServletRequest request,
             HttpServletResponse response) {
         HttpSession session = request.getSession();
-        Cart cart = (Cart) session.getAttribute("cart");
+        String name = request.getParameter("name");
+        Cookie[] cookies = request.getCookies();
+		for (Cookie cookie : cookies) {
+			if (cookie.getName().equalsIgnoreCase(name+"Product")) {
+				cookie.setMaxAge(0);
+				cookie.setPath("/");
+				response.addCookie(cookie);
+			}
+		}
+		
+		Cart cart = (Cart) session.getAttribute("cart");
         Product product = new Product();
 //        int productId = Integer.parseInt(request.getParameter("productId"));
-    	String name = request.getParameter("name");
-    	double price = Double.parseDouble(request.getParameter("price"));
-//    	product.setProductId(productId);
-    	product.setName(name);
-    	
-    	product.setPrice(price);  
+
+        
+     //   double price = Double.parseDouble(request.getParameter("price"));
+//      product.setProductId(productId);
+        product.setName(name);
+
+
         if (product != null && cart != null) {
             LineItem lineItem = new LineItem();
             lineItem.setProduct(product);
             cart.removeItem(lineItem);
+        }
+        
+        session.setAttribute("cart", cart);
+        if(cart.getCount()==0) {
+        	return "/views/cartRedirect.jsp";
         }
         return "/views/cart.jsp";
     }
