@@ -64,6 +64,7 @@ public class OrderController extends HttpServlet {
         if (cart == null || cart.getCount() == 0|| user == null) {
             request.setAttribute("emptyCart", "Your cart is empty");
         } else {
+        	//Read cookies for cart here.
             request.getSession().setAttribute("cart", cart);
         }
         return "/views/cart.jsp";
@@ -75,13 +76,12 @@ public class OrderController extends HttpServlet {
         Cart cart = (Cart) session.getAttribute("cart");
         if (cart == null)
             cart = new Cart();
-      
-        int productId = Integer.parseInt(request.getParameter("productId"));
     	String name = request.getParameter("name");
-    	String desc = request.getParameter("description");
+    	String quant = request.getParameter("qty-1");
+    	
     	double price = Double.parseDouble(request.getParameter("price"));
-      
-        Cookie PrinterCookie = new Cookie("3dPrinterCookie", "1" + "_" + name + "_" + String.valueOf(price));
+     
+        Cookie PrinterCookie = new Cookie(name+"Product", quant + "_" + name + "_" + String.valueOf(price));
 		PrinterCookie.setMaxAge(60*60*24*365*2);
 		PrinterCookie.setPath("/");
 		response.addCookie(PrinterCookie);
@@ -106,37 +106,43 @@ public class OrderController extends HttpServlet {
 		
 		cart.addItem(li);
 		session.setAttribute("cart", cart);
-		
+	
         return "/views/cart.jsp";
     }
     
     private String updateItem(HttpServletRequest request,
             HttpServletResponse response) {
         String quantity = request.getParameter("quantity");
-        
-        Cookie[] cookies = request.getCookies();
-        String cookieValue = CookieUtil.getCookieValue(cookies, "3dPrinterCookie");
-		
-		String[] arr = cookieValue.split("_");
-		ArrayList<String> list = new ArrayList<String>(Arrays.asList(arr));
+        HttpSession session = request.getSession();
+    	Cart cart = (Cart) session.getAttribute("cart");
 
-		Product myProduct = new Product();
-		LineItem li = new LineItem();
-		
-		int qty = Integer.parseInt(quantity);
-		li.setQuantity(qty);
-		
-		
-		li.setProduct(myProduct);
-		myProduct.setName(list.get(1));
-		Double myPrice = Double.parseDouble(list.get(2));
-		myProduct.setPrice(myPrice);
-		
-		HttpSession session = request.getSession();
-		Cart cart = (Cart) session.getAttribute("cart");
-		cart.addItem(li);
+        Cookie[] cookies = request.getCookies();
+        for(Cookie c:cookies) {
+        	if(c.getName().endsWith("Product")) {
+        	String cookieValue = CookieUtil.getCookieValue(cookies, c.getName() ); //1_3D-Printer_2399.99
+        	String[] arr = cookieValue.split("_");
+        	ArrayList<String> list = new ArrayList<String>(Arrays.asList(arr));
+        	
+        	Product myProduct = new Product();
+        	LineItem li = new LineItem();
+        	
+        	int qty = Integer.parseInt(quantity);
+        	li.setQuantity(qty);
+        	
+        	
+        	li.setProduct(myProduct);
+        	myProduct.setName(list.get(1));
+        	Double myPrice = Double.parseDouble(list.get(2));
+        	myProduct.setPrice(myPrice);
+        	
+        	
+        	cart.addItem(li);
+        	c.setValue(qty + "_" + list.get(1) + "_" + myPrice);
+        	}
+        }
 		session.setAttribute("cart", cart);
 		
+
         return "/views/cart.jsp";
     }
     
@@ -144,10 +150,10 @@ public class OrderController extends HttpServlet {
     private String removeItem(HttpServletRequest request,
             HttpServletResponse response) {
         HttpSession session = request.getSession();
-        
+        String name = request.getParameter("name");
         Cookie[] cookies = request.getCookies();
 		for (Cookie cookie : cookies) {
-			if (cookie.getName().equalsIgnoreCase("3dPrinterCookie")) {
+			if (cookie.getName().equalsIgnoreCase(name+"Product")) {
 				cookie.setMaxAge(0);
 				cookie.setPath("/");
 				response.addCookie(cookie);
@@ -157,10 +163,12 @@ public class OrderController extends HttpServlet {
 		Cart cart = (Cart) session.getAttribute("cart");
         Product product = new Product();
 //        int productId = Integer.parseInt(request.getParameter("productId"));
-        String name = request.getParameter("name");
+
+        
      //   double price = Double.parseDouble(request.getParameter("price"));
 //      product.setProductId(productId);
         product.setName(name);
+
 
         if (product != null && cart != null) {
             LineItem lineItem = new LineItem();
@@ -169,9 +177,9 @@ public class OrderController extends HttpServlet {
         }
         
         session.setAttribute("cart", cart);
-
-        return "/views/cartRedirect.jsp";
+        if(cart.getCount()==0) {
+        	return "/views/cartRedirect.jsp";
+        }
+        return "/views/cart.jsp";
     }
-    
-
 }

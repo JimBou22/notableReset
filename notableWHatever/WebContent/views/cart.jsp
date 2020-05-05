@@ -41,6 +41,8 @@
             <tr class="cart_row">
               <td>
                 <form action="<c:url value='cart'/>" method="post">
+
+
                   <input type="number" name="quantity" class="cartQuantity" min="1" max="100" value="<c:out value='${item.quantity}'/>" id="quantity">                         
                   <input type="submit" class="headerButton btn" name = "action" value="Update">
                 </form>                  
@@ -48,14 +50,19 @@
               <td class="cartTD">${item.product.name}</td>
 							<td class="cartTD">${item.product.priceCurrencyFormat}</td>
 							<td class="cartTD">${item.totalCurrencyFormat}</td>
+
               <td>
                 <form action="<c:url value='cart'/>" method="post">
+
                   <input type="hidden" name="name" value="<c:out value='${item.product.name}'/>">
                   <input type="submit" class="headerButton btn" name= "action" value="Remove">
+
                 </form>                  
               </td>
             </tr>
           </c:forEach>
+
+
           </table>
       </c:otherwise>
   </c:choose>
