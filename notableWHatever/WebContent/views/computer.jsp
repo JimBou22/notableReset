@@ -47,12 +47,13 @@
 						<p>
 							Status: <span>Unavailable</span>
 						</p>
-						<form class="add-to-cart" action="cart.html" method="POST">
-							<label for="qty-1">Quantity</label> <input type="text"
-								name="qty-1" id="qty-1" class="qty" value="1" />
-							<button id="cart" value="Add to cart" class="headerButton btn">Add
-								to cart</button>
-						</form>
+						<form class="add-to-cart" action="cart" method="POST">
+			              <label for="qty-1">Quantity</label>
+			              <input type="text" name="qty-1" id="qty-1" class="qty" value="1" />
+			              <input type="hidden" name ="productId" value = "2">
+			              <input type="hidden" name="name" value="Computer"> <input type="hidden" name="price" value = "12.99">
+			              <button name="action" id="cart" value="Add" class="headerButton btn">Add to cart</button>
+			            </form>
 					</div>
 				</div>
 			</div>

@@ -42,10 +42,12 @@
             <p> Status: <span>Available</span></p>
             <!-- <a class="headerButton btn" href="#" role="button">Add to Cart</a> -->
 
-            <form class="add-to-cart" action="cart.jsp" method="POST">
+            <form class="add-to-cart" action="cart" method="POST">
               <label for="qty-1">Quantity</label>
               <input type="text" name="qty-1" id="qty-1" class="qty" value="1" />
-              <button id = "cart" value="Add to cart" class="headerButton btn">Add to cart</button>
+              <input type="hidden" name ="productId" value = "10">
+              <input type="hidden" name="name" value="Skates"> <input type="hidden" name="price" value = "299.99">
+              <button name="action" id="cart" value="Add" class="headerButton btn">Add to cart</button>
             </form>
 
           </div>
