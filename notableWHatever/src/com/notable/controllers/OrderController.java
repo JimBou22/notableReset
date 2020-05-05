@@ -64,6 +64,7 @@ public class OrderController extends HttpServlet {
         if (cart == null || cart.getCount() == 0|| user == null) {
             request.setAttribute("emptyCart", "Your cart is empty");
         } else {
+        	//Read cookies for cart here.
             request.getSession().setAttribute("cart", cart);
         }
         return "/views/cart.jsp";
