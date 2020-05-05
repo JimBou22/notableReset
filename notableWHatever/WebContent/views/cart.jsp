@@ -14,6 +14,7 @@
   <c:import url="/sharedViews/header.jsp" />
 
   <c:if test="${cookie.loggedInCookie.value == 'yes'}">
+
     <div class="container home">
       <div class="row">
         <div class="col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 col-xl-4 col-xl-offset-4">
@@ -64,6 +65,7 @@
           </div>
         </div>
       </div>
+
     </div>
   </c:if>
   <c:if test="${cookie.loggedInCookie.value != 'yes'}">
