@@ -42,8 +42,8 @@
               <td>
                 <form action="<c:url value='cart'/>" method="post">
 
-
-                  <input type="number" name="quantity" class="cartQuantity" min="1" max="100" value="<c:out value='${item.quantity}'/>" id="quantity">                         
+				  <input type="hidden" name="name" value="<c:out value='${item.product.name}'/>">
+                  <input type="number" name='${item.product.name}' class="cartQuantity" min="1" max="100" value="<c:out value='${item.quantity}'/>" id="quantity">                         
                   <input type="submit" class="headerButton btn" name = "action" value="Update">
                 </form>                  
               </td>

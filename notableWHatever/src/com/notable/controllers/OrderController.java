@@ -65,6 +65,7 @@ public class OrderController extends HttpServlet {
             request.setAttribute("emptyCart", "Your cart is empty");
         } else {
         	//Read cookies for cart here.
+        	request.removeAttribute("emptyCart");
             request.getSession().setAttribute("cart", cart);
         }
         return "/views/cart.jsp";
@@ -112,13 +113,14 @@ public class OrderController extends HttpServlet {
     
     private String updateItem(HttpServletRequest request,
             HttpServletResponse response) {
-        String quantity = request.getParameter("quantity");
+    	String name = request.getParameter("name");
+        String quantity = request.getParameter(name);
         HttpSession session = request.getSession();
     	Cart cart = (Cart) session.getAttribute("cart");
 
         Cookie[] cookies = request.getCookies();
         for(Cookie c:cookies) {
-        	if(c.getName().endsWith("Product")) {
+        	if(c.getName().endsWith("Product") && c.getName().startsWith(name)) {
         	String cookieValue = CookieUtil.getCookieValue(cookies, c.getName() ); //1_3D-Printer_2399.99
         	String[] arr = cookieValue.split("_");
         	ArrayList<String> list = new ArrayList<String>(Arrays.asList(arr));
@@ -138,6 +140,8 @@ public class OrderController extends HttpServlet {
         	
         	cart.addItem(li);
         	c.setValue(qty + "_" + list.get(1) + "_" + myPrice);
+        	System.out.println(c.getValue());
+        	response.addCookie(c);
         	}
         }
 		session.setAttribute("cart", cart);
